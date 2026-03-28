@@ -36,5 +36,5 @@ backend/data
 frontend/node_modules
 frontend/build
 
-backend/db_embeddings_cache.npz
+backend/db_embeddings_cache*.npz
 

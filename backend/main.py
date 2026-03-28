@@ -32,6 +32,8 @@ async def _initialize():
     """Run heavy startup work in a thread so the server is immediately reachable."""
     loop = asyncio.get_event_loop()
     device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
+    # device = torch.device("cpu")
+    print(f"Using device: {device}")
 
     # ── 1. Load model ────────────────────────────────────────────────────────
     app_state.status   = "loading_model"
@@ -46,7 +48,7 @@ async def _initialize():
     # ── 3. Build / load embeddings ───────────────────────────────────────────
     app_state.status   = "building_embeddings"
     app_state.progress = 0
-    app_state.message  = "Building image embeddings…"
+    app_state.message  = f"Building image embeddings… On device: {device}"
     transform = get_transform()
 
     def on_batch(current: int, total: int):

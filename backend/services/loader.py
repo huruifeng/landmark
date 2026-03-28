@@ -12,9 +12,9 @@ from torch.utils.data import Dataset, DataLoader
 
 BACKEND    = Path(__file__).parent.parent
 TRAIN_DIR  = BACKEND / "trained_model" / "train"
-CHECKPOINT = TRAIN_DIR / "checkpoints" / "best_model.pth"
-DATA_DIR   = BACKEND / "trained_model" / "data" / "gldv2_micro"
-CACHE_FILE = BACKEND / "db_embeddings_cache.npz"
+CHECKPOINT = TRAIN_DIR / "checkpoints" / "best_model_110k.pth"
+DATA_DIR   = BACKEND / "trained_model" / "data" / "gldv2_110k"
+CACHE_FILE = BACKEND / "db_embeddings_cache_110k.npz"
 
 # Make trained_model/train importable
 if str(TRAIN_DIR) not in sys.path:
@@ -55,10 +55,10 @@ def load_csv_lists() -> tuple[list[str], list[int], list[str], list[int]]:
     train_df = pd.read_csv(DATA_DIR / "train.csv")
     val_df   = pd.read_csv(DATA_DIR / "val.csv")
     return (
-        train_df["filename"].tolist(),
-        train_df["landmark_id"].tolist(),
-        val_df["filename"].tolist(),
-        val_df["landmark_id"].tolist(),
+        [i if i.endswith('.jpg') else i+'.jpg' for i in train_df["image_id"].tolist()],
+        [l for l in train_df["landmark_id"].tolist()],
+        [i if i.endswith('.jpg') else i+'.jpg' for i in val_df["image_id"].tolist()],
+        [l for l in val_df["landmark_id"].tolist()],
     )
 
 
