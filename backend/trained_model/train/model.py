@@ -17,6 +17,14 @@ class ArcFaceHead(nn.Module):
 
     Produces angular-margin softmax logits that encourage the model
     to learn discriminative, well-separated embeddings.
+
+    Args:
+    - embedding_dim (int): Dimensionality of input embeddings.
+    - num_classes (int): Number of classes for classification.
+    - s (float): Scaling factor for logits (default: 30.0).
+    - m (float): Angular margin in radians (default: 0.3).
+    
+
     """
 
     def __init__(self, embedding_dim, num_classes, s=30.0, m=0.3):
